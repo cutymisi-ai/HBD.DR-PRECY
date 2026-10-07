@@ -21,9 +21,162 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      overflow-x: hidden;
     }
 
     .container {
       width: 100%;
       max-width: 480px;
+      text-align: center;
+    }
+
+    .slide {
+      display: none;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .photo-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 12px 12px 20px 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      margin: 20px auto;
+      max-width: 320px;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .caption {
+      color: #333333;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 12px;
+      font-family: 'Georgia', serif;
+    }
+
+    h2.subtitle {
+      font-size: 1.8rem;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .description {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      padding: 15px 20px;
+      border-radius: 20px;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Slide 1 -->
+    <div class="slide active" id="slide-0">
+      <h2 class="subtitle">Happy Birthday!</h2>
+      <div class="description">
+        Tap next to explore your birthday slide deck! Wishing you a day filled with joy as we celebrate you today! 🎈💖
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" id="slide-1">
+      <div class="photo-card">
+        <img src="1000040081.jpg" alt="Dr Precy Portrait 1">
+        <div class="caption">Dr Precy in Red 🌹</div>
+      </div>
+      <h2 class="subtitle">Elegance & Ambition</h2>
+      <div class="description">
+        Stepping into the future with grace, strength, and brilliance.
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" id="slide-2">
+      <div class="photo-card" style="transform: rotate(3deg);">
+        <img src="1000040082.jpg" alt="Dr Precy Portrait 2">
+        <div class="caption">Future Doctor 🩺</div>
+      </div>
+      <h2 class="subtitle">Confidence & Style</h2>
+      <div class="description">
+        Ready to take on the medical world and heal lives!
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide" id="slide-3">
+      <div class="photo-card" style="transform: rotate(-2deg);">
+        <img src="1000040084.jpg" alt="Dr Precy Portrait 3">
+        <div class="caption">Radiant Smiles ✨</div>
+      </div>
+      <h2 class="subtitle">A Bright Future</h2>
+      <div class="description">
+        May your year ahead be as inspiring and remarkable as you are.
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+      <button class="nav-btn" id="prevBtn">Prev</button>
+      <button class="nav-btn" id="nextBtn">Next</button>
+    </div>
+
+  </div>
+
+  <script>
+    let current = 0;
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+
+    document.getElementById('nextBtn').addEventListener('click', function() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % total;
+      slides[current].classList.add('active');
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', function() {
+      slides[current].classList.remove('active');
+      current = (current - 1 + total) % total;
+      slides[current].classList.add('active');
+    });
+  </script>
+
+</body>
+</html>
