@@ -1,182 +1,470 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Slide Deck</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Dr Precy! ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e1b4b, #31103f);
+            color: #fff;
+        }
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-      text-align: center;
-    }
+        /* Floating Background Particles */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
 
-    .slide {
-      display: none;
-    }
+        .heart-particle {
+            position: absolute;
+            bottom: -50px;
+            font-size: 20px;
+            animation: floatUp linear infinite;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 6px rgba(236, 72, 153, 0.6));
+        }
 
-    .slide.active {
-      display: block;
-    }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8) rotate(0deg);
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-110vh) scale(1.3) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
-    .photo-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 12px 12px 20px 12px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      margin: 20px auto;
-      max-width: 320px;
-    }
+        /* Music Floating Control */
+        .audio-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
 
-    .photo-card img {
-      width: 100%;
-      height: 380px;
-      object-fit: cover;
-      border-radius: 12px;
-      display: block;
-    }
+        .audio-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
 
-    .caption {
-      color: #333333;
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-top: 12px;
-      font-family: 'Georgia', serif;
-    }
+        /* Slider Container */
+        .slider-wrapper {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 10;
+            position: relative;
+        }
 
-    h2.subtitle {
-      font-size: 1.8rem;
-      margin-top: 15px;
-      margin-bottom: 10px;
-      font-weight: 700;
-      color: #ffffff;
-    }
+        .slide {
+            min-width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
 
-    .description {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px);
-      padding: 15px 20px;
-      border-radius: 20px;
-      font-size: 1rem;
-      line-height: 1.5;
-      margin-top: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+        /* Slide Typography */
+        h1.gold-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, #f39c12, #f1c40f, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+        }
 
-    .navigation {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin-top: 25px;
-    }
+        h2.subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #f472b6;
+            margin-bottom: 20px;
+        }
 
-    .nav-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+        p.description {
+            font-size: 1.1rem;
+            max-width: 650px;
+            line-height: 1.7;
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
 
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-    }
-  </style>
+        /* Photo Frame Styles */
+        .photo-card {
+            width: 280px;
+            height: 370px;
+            background: #fff;
+            padding: 12px 12px 25px 12px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: rotate(-3deg);
+            transition: all 0.4s ease;
+            margin-bottom: 25px;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 25px 50px rgba(236, 72, 153, 0.4);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .photo-card .caption {
+            color: #333;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        /* Interactive Joke Card */
+        .joke-box {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px dashed #f87171;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            max-width: 600px;
+            color: #fca5a5;
+            font-style: italic;
+        }
+
+        /* Slide Navigation Controls */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+        /* Pagination Dots */
+        .pagination {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: #f472b6;
+            width: 30px;
+            border-radius: 10px;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 600px) {
+            h1.gold-title { font-size: 2rem; }
+            h2.subtitle { font-size: 1.7rem; }
+            p.description { font-size: 0.95rem; padding: 18px; }
+            .photo-card { width: 230px; height: 310px; }
+            .photo-card img { height: 250px; }
+            .nav-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
+    <!-- Floating Background Particles -->
+    <div id="hearts-container"></div>
 
-    <!-- Slide 1 -->
-    <div class="slide active" id="slide-0">
-      <h2 class="subtitle">Happy Birthday!</h2>
-      <div class="description">
-        Tap next to explore your birthday slide deck! Wishing you a day filled with joy as we celebrate you today! 🎈💖
-      </div>
+    <!-- Music Control Button -->
+    <button class="audio-btn" id="audioToggle">
+        <span id="audioIcon">🎵</span> <span id="audioText">Play Song</span>
+    </button>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrow prev-btn" id="prevSlide">❮</div>
+    <div class="nav-arrow next-btn" id="nextSlide">❯</div>
+
+    <!-- Pagination Dots -->
+    <div class="pagination" id="pagination">
+        <div class="dot active" data-slide="0"></div>
+        <div class="dot" data-slide="1"></div>
+        <div class="dot" data-slide="2"></div>
+        <div class="dot" data-slide="3"></div>
+        <div class="dot" data-slide="4"></div>
     </div>
 
-    <!-- Slide 2 -->
-    <div class="slide" id="slide-1">
-      <div class="photo-card">
-        <img src="1000040081.jpg" alt="Dr Precy Portrait 1">
-        <div class="caption">Dr Precy in Red 🌹</div>
-      </div>
-      <h2 class="subtitle">Elegance & Ambition</h2>
-      <div class="description">
-        Stepping into the future with grace, strength, and brilliance.
-      </div>
+    <!-- Main Slide Wrapper -->
+    <div class="slider-wrapper" id="sliderWrapper">
+
+        <!-- Slide 1: Welcome -->
+        <div class="slide">
+            <h2 class="subtitle">Celebration Time ✨</h2>
+            <h1 class="gold-title">Happy Birthday<br>Dr Precy✨</h1>
+            <p class="description">
+                Swipe or tap next to explore your birthday slide deck! Wishing you a day filled with joy, happiness, and unforgettable moments as we celebrate you today! 🩺💖
+            </p>
+        </div>
+
+        <!-- Slide 2: Photo 1 -->
+        <div class="slide">
+            <div class="photo-card">
+                <img src="1000040081.jpg" alt="Dr Precy Portrait 1" onerror="this.src='https://images.unsplash.com/photo-1594824813566-888242a8bdf0?auto=format&fit=crop&w=600&q=80'">
+                <div class="caption">Dr Precy in Red 🌹</div>
+            </div>
+            <h2 class="subtitle">Elegance & Ambition</h2>
+            <p class="description">
+                Stepping into the future with grace, strength, and brilliance.
+            </p>
+        </div>
+
+        <!-- Slide 3: Photo 2 -->
+        <div class="slide">
+            <div class="photo-card" style="transform: rotate(3deg);">
+                <img src="1000040082.jpg" alt="Dr Precy Portrait 2" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80'">
+                <div class="caption">Future Doctor 🩺</div>
+            </div>
+            <h2 class="subtitle">Confidence & Style</h2>
+            <p class="description">
+                Ready to take on the medical world and heal lives!
+            </p>
+        </div>
+
+        <!-- Slide 4: Photo 3 -->
+        <div class="slide">
+            <div class="photo-card" style="transform: rotate(-2deg);">
+                <img src="1000040084.jpg" alt="Dr Precy Portrait 3" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80'">
+                <div class="caption">Radiant Sunshine ☀️</div>
+            </div>
+            <h2 class="subtitle">Joy & Radiance</h2>
+            <p class="description">
+                May your bright smile always light up every room you walk into!
+            </p>
+        </div>
+
+        <!-- Slide 5: Note & Joke -->
+        <div class="slide">
+            <h2 class="subtitle">A Special Note For You 💌</h2>
+            <p class="description">
+                Wishing you all the absolute best on your incredible journey to becoming a doctor! You have the passion, intelligence, and heart for it. Remember, whenever you need help or support along the way, **I will always be right there for you!** 🩺✨
+            </p>
+            <div class="joke-box">
+                "P.S. I would have organized a lavish fancy dinner or a weekend luxury vacation for you... but due to your recent bad behavior, NOTHING FOR YOU! 😂 Ops!"
+            </div>
+        </div>
+
     </div>
 
-    <!-- Slide 3 -->
-    <div class="slide" id="slide-2">
-      <div class="photo-card" style="transform: rotate(3deg);">
-        <img src="1000040082.jpg" alt="Dr Precy Portrait 2">
-        <div class="caption">Future Doctor 🩺</div>
-      </div>
-      <h2 class="subtitle">Confidence & Style</h2>
-      <div class="description">
-        Ready to take on the medical world and heal lives!
-      </div>
-    </div>
+    <script>
+        // Floating Hearts Background Engine
+        const heartsContainer = document.getElementById('hearts-container');
+        const heartIcons = ['💖', '✨', '🩺', '🌸', '💕', '⭐'];
 
-    <!-- Slide 4 -->
-    <div class="slide" id="slide-3">
-      <div class="photo-card" style="transform: rotate(-2deg);">
-        <img src="1000040084.jpg" alt="Dr Precy Portrait 3">
-        <div class="caption">Radiant Smiles ✨</div>
-      </div>
-      <h2 class="subtitle">A Bright Future</h2>
-      <div class="description">
-        May your year ahead be as inspiring and remarkable as you are.
-      </div>
-    </div>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 15 + 18) + 'px';
+            heartsContainer.appendChild(heart);
 
-    <!-- Navigation -->
-    <div class="navigation">
-      <button class="nav-btn" id="prevBtn">Prev</button>
-      <button class="nav-btn" id="nextBtn">Next</button>
-    </div>
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+        setInterval(createHeart, 350);
 
-  </div>
+        // Slide Navigation Logic
+        let currentSlide = 0;
+        const totalSlides = 5;
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const dots = document.querySelectorAll('.dot');
 
-  <script>
-    let current = 0;
-    const slides = document.querySelectorAll('.slide');
-    const total = slides.length;
+        function updateSlide() {
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}vw)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
 
-    document.getElementById('nextBtn').addEventListener('click', function() {
-      slides[current].classList.remove('active');
-      current = (current + 1) % total;
-      slides[current].classList.add('active');
-    });
+        document.getElementById('nextSlide').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlide();
+        });
 
-    document.getElementById('prevBtn').addEventListener('click', function() {
-      slides[current].classList.remove('active');
-      current = (current - 1 + total) % total;
-      slides[current].classList.add('active');
-    });
-  </script>
+        document.getElementById('prevSlide').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlide();
+        });
 
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                currentSlide = parseInt(e.target.getAttribute('data-slide'));
+                updateSlide();
+            });
+        });
+
+        // Touch Swipe Gesture Support
+        let startX = 0;
+        document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+        document.addEventListener('touchend', e => {
+            let endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateSlide();
+            } else if (endX - startX > 50) {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateSlide();
+            }
+        });
+
+        // Synthesized Birthday Audio Melody (Web Audio API)
+        let audioCtx = null;
+        let isPlaying = false;
+        let melodyTimeout = null;
+
+        const birthdayNotes = [
+            { note: 'C4', duration: 0.35 }, { note: 'C4', duration: 0.15 },
+            { note: 'D4', duration: 0.5 },  { note: 'C4', duration: 0.5 },
+            { note: 'F4', duration: 0.5 },  { note: 'E4', duration: 1.0 },
+            
+            { note: 'C4', duration: 0.35 }, { note: 'C4', duration: 0.15 },
+            { note: 'D4', duration: 0.5 },  { note: 'C4', duration: 0.5 },
+            { note: 'G4', duration: 0.5 },  { note: 'F4', duration: 1.0 },
+
+            { note: 'C4', duration: 0.35 }, { note: 'C4', duration: 0.15 },
+            { note: 'C5', duration: 0.5 },  { note: 'A4', duration: 0.5 },
+            { note: 'F4', duration: 0.5 },  { note: 'E4', duration: 0.5 },
+            { note: 'D4', duration: 0.8 },
+
+            { note: 'A#4', duration: 0.35 }, { note: 'A#4', duration: 0.15 },
+            { note: 'A4', duration: 0.5 },   { note: 'F4', duration: 0.5 },
+            { note: 'G4', duration: 0.5 },   { note: 'F4', duration: 1.2 }
+        ];
+
+        const noteFreqs = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
+            'G4': 392.00, 'A4': 440.00, 'A#4': 466.16, 'C5': 523.25
+        };
+
+        function playNote(freq, duration) {
+            if (!audioCtx || !isPlaying) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function playMelody(index = 0) {
+            if (!isPlaying) return;
+            if (index >= birthdayNotes.length) index = 0;
+            const item = birthdayNotes[index];
+            playNote(noteFreqs[item.note], item.duration);
+            melodyTimeout = setTimeout(() => {
+                playMelody(index + 1);
+            }, item.duration * 1000 + 50);
+        }
+
+        document.getElementById('audioToggle').addEventListener('click', () => {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            isPlaying = !isPlaying;
+            const audioIcon = document.getElementById('audioIcon');
+            const audioText = document.getElementById('audioText');
+
+            if (isPlaying) {
+                audioIcon.innerText = '⏸️';
+                audioText.innerText = 'Pause Song';
+                playMelody();
+            } else {
+                audioIcon.innerText = '🎵';
+                audioText.innerText = 'Play Song';
+                clearTimeout(melodyTimeout);
+            }
+        });
+    </script>
 </body>
 </html>
